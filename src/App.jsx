@@ -57,7 +57,7 @@ function App() {
           {/* Form Section */}
           <div className="col-lg-6 col-12 mb-4" style={form}>
           <h2>Checkout</h2>
-            <form action="https://nscc-0493304-tickethub-api-d4b0c7c0fzdze9a2.canadacentral-01.azurewebsites.net" method="POST">
+            <form action="https://nscc-0493304-tickethub-api-d4b0c7c0fzdze9a2.canadacentral-01.azurewebsites.net/api/purchase" method="POST">
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
                 <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
