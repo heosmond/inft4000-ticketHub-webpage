@@ -1,25 +1,69 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './styles.css';
 
 function App() {
+  const [formData, setFormData] = useState({
+    concertId: 34,
+    name: '',
+    email: '',
+    phone: '',
+    quantity: '',
+    creditCard: '',
+    expiration: '',
+    securityCode: '',
+    address: '',
+    city: '',
+    province: '',
+    postalCode: '',
+    country: '',
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('https://nscc-0493304-tickethub-api-d4b0c7c0fzdze9a2.canadacentral-01.azurewebsites.net/api/purchase', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Form submitted successfully!');
+      } else {
+        alert('Failed to submit the form.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while submitting the form.');
+    }
+  };
+
   const style = {  
     background: 'linear-gradient(90deg, rgba(77,38,103,1) 0%, rgba(120,48,48,1) 50%, rgba(128,92,41,1) 100%)',
     color: 'white',
     height: '30vh',
-  }
+  };
 
   const form = {
-    width: '400px'
-  }
+    width: '400px',
+  };
+
   return (
     <>
       {/* navigation */}
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-          🎟️ TicketHub
+            🎟️ TicketHub
           </a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -56,55 +100,55 @@ function App() {
         <div className="row justify-content-center">
           {/* Form Section */}
           <div className="col-lg-6 col-12 mb-4" style={form}>
-          <h2>Checkout</h2>
-            <form action="https://nscc-0493304-tickethub-api-d4b0c7c0fzdze9a2.canadacentral-01.azurewebsites.net/api/purchase" method="POST">
+            <h2>Checkout</h2>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
-                <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
+                <input type="text" className="form-control" id="name" placeholder="Enter your name" value={formData.name} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email</label>
-                <input type="email" className="form-control" id="email" placeholder="Enter your email" required />
+                <input type="email" className="form-control" id="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="phone" className="form-label">Phone</label>
-                <input type="tel" className="form-control" id="phone" placeholder="Enter your phone number" required />
+                <input type="tel" className="form-control" id="phone" placeholder="Enter your phone number" value={formData.phone} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="quantity" className="form-label">Ticket Quantity</label>
-                <input type="number" className="form-control" id="quantity" placeholder="Enter ticket quantity" required />
+                <input type="number" className="form-control" id="quantity" placeholder="Enter ticket quantity" value={formData.quantity} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="creditCard" className="form-label">Credit Card</label>
-                <input type="text" className="form-control" id="creditCard" placeholder="Enter your credit card number" required />
+                <input type="text" className="form-control" id="creditCard" placeholder="Enter your credit card number" value={formData.creditCard} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="expiration" className="form-label">Expiration Date</label>
-                <input type="text" className="form-control" id="expiration" placeholder="MM/YY" required />
+                <input type="text" className="form-control" id="expiration" placeholder="MM/YY" value={formData.expiration} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="securityCode" className="form-label">Security Code</label>
-                <input type="text" className="form-control" id="securityCode" placeholder="Enter security code" required />
+                <input type="text" className="form-control" id="securityCode" placeholder="Enter security code" value={formData.securityCode} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="address" className="form-label">Address</label>
-                <input type="text" className="form-control" id="address" placeholder="Enter your address" required />
+                <input type="text" className="form-control" id="address" placeholder="Enter your address" value={formData.address} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="city" className="form-label">City</label>
-                <input type="text" className="form-control" id="city" placeholder="Enter your city" required />
+                <input type="text" className="form-control" id="city" placeholder="Enter your city" value={formData.city} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="province" className="form-label">Province</label>
-                <input type="text" className="form-control" id="province" placeholder="Enter your province" required />
+                <input type="text" className="form-control" id="province" placeholder="Enter your province" value={formData.province} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="postalCode" className="form-label">Postal Code</label>
-                <input type="text" className="form-control" id="postalCode" placeholder="Enter your postal code" required />
+                <input type="text" className="form-control" id="postalCode" placeholder="Enter your postal code" value={formData.postalCode} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="country" className="form-label">Country</label>
-                <input type="text" className="form-control" id="country" placeholder="Enter your country" required />
+                <input type="text" className="form-control" id="country" placeholder="Enter your country" value={formData.country} onChange={handleChange} required />
               </div>
               <button type="submit" className="btn btn-primary">Submit</button>
             </form>
@@ -125,7 +169,7 @@ function App() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
